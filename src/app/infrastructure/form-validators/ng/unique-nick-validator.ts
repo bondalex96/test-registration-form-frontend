@@ -1,14 +1,14 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { UserRepositoryService } from '../../repositories/user-repository.service';
+import { UserRepository } from '../../repositories/user-repository';
 import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UniqueNickValidator {
-    constructor(private userRepository: UserRepositoryService) {
+    constructor(private userRepository: UserRepository) {
     }
 
     public validate(

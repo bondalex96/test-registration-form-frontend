@@ -6,6 +6,7 @@ import { RegistrationComponent } from './presentation/components/registration/re
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NotifierModule } from 'angular-notifier';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NotifierModule
   ],
   providers: [],
   bootstrap: [AppComponent]

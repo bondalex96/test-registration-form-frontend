@@ -78,6 +78,6 @@
       Пароль обязателен для ввода
     </div>
 
-    <button type="submit">Готово</button>
+    <button [disabled]="!this.registrationForm.valid" type="submit">Готово</button>
 </form>
 </div>

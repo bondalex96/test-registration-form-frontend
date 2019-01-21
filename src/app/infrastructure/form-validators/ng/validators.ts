@@ -13,7 +13,6 @@ export class Validators {
     }
 
     public static firstCharacterIsLatin(control: FormControl): ValidationErrors | null {
-        console.log(control.value);
         if (!control.value) {
             return { firstCharacterIsLatin: true };
         }

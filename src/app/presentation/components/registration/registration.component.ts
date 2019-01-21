@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Validators as CustomValidators } from '../../../infrastructure/form-validators/ng/validators';
-import { UniqueEmailValidator } from '../../../infrastructure/form-validators/ng/unique-email-validator';
-import { UniqueNickValidator } from '../../../infrastructure/form-validators/ng/unique-nick-validator';
-import { NgxSpinnerService } from 'ngx-spinner';
+import {Component, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Validators as CustomValidators} from '../../../infrastructure/form-validators/ng/validators';
+import {UniqueEmailValidator} from '../../../infrastructure/form-validators/ng/unique-email-validator';
+import {UniqueNickValidator} from '../../../infrastructure/form-validators/ng/unique-nick-validator';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {Registration} from '../../../application/use-cases/registration';
+import {NotifierService} from 'angular-notifier';
 
 @Component({
     selector: 'app-registration',
@@ -15,26 +17,42 @@ export class RegistrationComponent implements OnInit {
     registrationForm: FormGroup;
 
     constructor(
+        private registration: Registration,
         private fb: FormBuilder,
         private uniqueEmailValidator: UniqueEmailValidator,
         private uniqueNickValidator: UniqueNickValidator,
-        private spinner: NgxSpinnerService
+        private spinner: NgxSpinnerService,
+        private notifier: NotifierService
     ) {
     }
 
     public ngOnInit() {
-        this.spinner.show();
-
         this.registrationForm = this.initForm();
     }
 
     public onSubmit(): void {
-        const controls = this.registrationForm.controls;
-        Object.keys(controls).forEach(key => {
-            controls[key].markAsTouched();
-        });
+        this.markControlsAsTouched();
+
         if (this.registrationForm.valid) {
-            alert('Success registration!');
+            this.spinner.show();
+
+            this.registration.execute(
+                this.nickControl().value,
+                this.firstNameControl().value,
+                this.lastNameControl().value,
+                this.emailControl().value,
+                this.passwordControl().value
+            )
+                .subscribe(() => {
+                    this.spinner.hide();
+                    this.resetValuesOfControls();
+                    this.notifier.notify('success', 'Успешная регистрация!');
+                }, (errors) => {
+                    this.spinner.hide();
+                    errors.map((error) => {
+                        this.notifier.notify('error', error);
+                    });
+                });
             return;
         }
     }
@@ -45,7 +63,8 @@ export class RegistrationComponent implements OnInit {
                 Validators.required,
                 CustomValidators.hasOnlyLatinCharactersAndDigits,
                 CustomValidators.firstCharacterIsLatin,
-            ], [this.uniqueNickValidator]],
+            ], [this.uniqueNickValidator]
+            ],
             email: [null, [
                 Validators.required,
                 Validators.email,
@@ -63,6 +82,20 @@ export class RegistrationComponent implements OnInit {
                 Validators.required,
                 Validators.minLength(RegistrationComponent.passwordMinLength),
             ]],
+        });
+    }
+
+    private markControlsAsTouched(): void {
+        const controls = this.registrationForm.controls;
+        Object.keys(controls).forEach(key => {
+            controls[key].markAsTouched();
+        });
+    }
+
+    private resetValuesOfControls(): void {
+        const controls = this.registrationForm.controls;
+        Object.keys(controls).forEach(key => {
+            controls[key].reset();
         });
     }
 
