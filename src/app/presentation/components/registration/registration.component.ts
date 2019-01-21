@@ -46,7 +46,7 @@ export class RegistrationComponent implements OnInit {
                 .subscribe(() => {
                     this.spinner.hide();
                     this.resetValuesOfControls();
-                    this.notifier.notify('success', 'Успешная регистрация!');
+                    this.notifier.notify('success', 'Регистрация завершена!');
                 }, (errors) => {
                     this.spinner.hide();
                     errors.map((error) => {
