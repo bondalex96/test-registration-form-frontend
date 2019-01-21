@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from '../../domain/entities/user';
 
@@ -8,10 +8,8 @@ import { User } from '../../domain/entities/user';
   providedIn: 'root'
 })
 export class UserRepository {
-  private apiRoot;
 
-  constructor(private httpClient: HttpClient) {
-    this.apiRoot = 'http://localhost';
+  constructor(private httpClient: HttpClient, @Inject('apiHost') private apiRoot: string) {
   }
 
   public register(user: User) {

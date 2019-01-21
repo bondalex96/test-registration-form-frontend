@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NotifierModule } from 'angular-notifier';
+import { config } from '../app.config';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { NotifierModule } from 'angular-notifier';
     NgxSpinnerModule,
     NotifierModule
   ],
-  providers: [],
+  providers: [
+      {provide: 'apiHost', useValue: config.apiUrl}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
