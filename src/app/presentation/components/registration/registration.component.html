@@ -1,0 +1,83 @@
+<h2>Регистрация</h2>
+<div class="form-content">
+  <form class="user-form" [formGroup]="registrationForm" (submit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="nick">Никнейм:</label>
+      <i *ngIf="nickControl().pending" class="loader"></i>
+      <i *ngIf="nickControl().errors === null" class="fa fa-check gray"></i>
+      <i *ngIf="nickControl().errors !== null && nickControl().touched" class="fa fa-exclamation red"></i>
+      <input type="text" id="nick" formControlName="nick" />
+    </div>
+    <div class="error" *ngIf="nickControl().hasError('required') && nickControl().touched">
+      Ник обязателен для ввода
+    </div>
+    <div class="error" *ngIf="nickControl().hasError('hasOnlyLatinCharactersAndDigits') && nickControl().touched">
+      Ник может содержать только латинские символы и цифры
+    </div>
+    <div class="error" *ngIf="nickControl().hasError('firstCharacterIsLatin') && nickControl().touched">
+      Первый символ может содержать только латинские символы
+    </div>
+    <div class="error" *ngIf="nickControl().hasError('uniqueNick') && nickControl().touched">
+      Человек с таким никнеймом уже зарегестрирован
+    </div>
+
+    <div class="form-group">
+      <label for="firstName">Имя:</label>
+      <i *ngIf="firstNameControl().errors === null" class="fa fa-check gray"></i>
+      <i *ngIf="firstNameControl().errors !== null && firstNameControl().touched" class="fa fa-exclamation red"></i>
+      <input type="text" id="firstName" formControlName="firstName" />
+    </div>
+    <div class="error" *ngIf="firstNameControl().hasError('required') && firstNameControl().touched">
+      Имя обязательно для ввода
+    </div>
+    <div class="error" *ngIf="firstNameControl().hasError('hasOnlyRussianCharacters') && firstNameControl().touched">
+      Имя может содержать только русские символы
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Фамилия:</label>
+      <i *ngIf="lastNameControl().errors === null" class="fa fa-check gray"></i>
+      <i *ngIf="lastNameControl().errors !== null && lastNameControl().touched" class="fa fa-exclamation red"></i>
+      <input type="text" id="lastName" formControlName="lastName" />
+    </div>
+    <div class="error" *ngIf="lastNameControl().hasError('required') && lastNameControl().touched">
+      Фамилия обязательна для ввода
+    </div>
+    <div class="error" *ngIf="lastNameControl().hasError('hasOnlyRussianCharacters') && lastNameControl().touched">
+      Фамилия может содержать только русские символы
+    </div>
+
+    <div class="form-group">
+      <label for="email">Электронная почта:</label>
+      <i *ngIf="emailControl().pending" class="loader"></i>
+      <i *ngIf="emailControl().errors === null" class="fa fa-check gray"></i>
+      <i *ngIf="emailControl().errors !== null && emailControl().touched" class="fa fa-exclamation red"></i>
+      <input type="text" id="email" formControlName="email" />
+    </div>
+    <div class="error" *ngIf="emailControl().hasError('required') && emailControl().touched">
+      Электронная почта обязательна для ввода
+    </div>
+    <div class="error" *ngIf="emailControl().hasError('email') && emailControl().touched">
+      Электронная почта невалидна
+    </div>
+    <div class="error" *ngIf="emailControl().hasError('uniqueEmail') && emailControl().touched">
+      На этот ящик уже зарегестрирован аккаунт
+    </div>
+
+    <div class="form-group">
+      <label for="password">Пароль</label>
+      <i *ngIf="passwordControl().errors === null" class="fa fa-check gray"></i>
+      <i *ngIf="passwordControl().errors !== null && passwordControl().touched" class="fa fa-exclamation red"></i>
+      <input type="password" id="password" formControlName="password" />
+    </div>
+    <div class="error" *ngIf="passwordControl().hasError('minlength') && passwordControl().touched">
+      Пожайлуста, выдумайте пароль длиннее 5 символов
+    </div>
+    <div class="error" *ngIf="passwordControl().hasError('required') && passwordControl().touched">
+      Пароль обязателен для ввода
+    </div>
+
+    <button type="submit">Готово</button>
+</form>
+</div>

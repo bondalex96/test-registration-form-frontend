@@ -1,0 +1,43 @@
+.title {
+    text-align: center;
+}
+
+.form-group {
+    display:  flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.error {
+    color:red;
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 5px;
+}
+
+.form-content {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.red {
+    color: red;
+}
+
+.gray {
+    color: gray;
+}
+
+.loader {
+    border: 10px solid #f3f3f3; /* Light grey */
+    border-top: 10px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
